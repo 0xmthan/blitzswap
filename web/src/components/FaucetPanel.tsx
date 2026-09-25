@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { zeroAddress } from "viem";
-import { useBalance, useChains, useConfig, useConnection, useReadContracts } from "wagmi";
+import { useBalance, useChains, useConfig, useConnection, useReadContracts, useWatchAsset } from "wagmi";
 import { simulateContract, writeContract } from "wagmi/actions";
 
 import { TxStatus } from "@/components/TxStatus";
@@ -21,6 +21,7 @@ export function FaucetPanel({ chainId, deployment, wrongNetwork }: Props) {
   const { address, isConnected } = useConnection();
   const chain = useChains().find((c) => c.id === chainId);
   const tx = useTrackedTx(chainId);
+  const watchAsset = useWatchAsset();
   const now = useNow();
 
   const tokens = [deployment.token0, deployment.token1];
@@ -72,14 +73,27 @@ export function FaucetPanel({ chainId, deployment, wrongNetwork }: Props) {
           const last = lastClaims?.[i] ?? 0n;
           const secondsLeft = last === 0n ? 0 : Number(last) + FAUCET_COOLDOWN - now;
           return (
-            <button
-              key={token.address}
-              onClick={() => claim(token)}
-              disabled={tx.busy || secondsLeft > 0}
-              className="rounded-2xl bg-white/10 px-3 py-3 text-sm font-semibold hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              {secondsLeft > 0 ? `${token.symbol} in ${Math.ceil(secondsLeft / 60)} min` : `Get 1,000 ${token.symbol}`}
-            </button>
+            <div key={token.address} className="flex flex-col gap-1">
+              <button
+                onClick={() => claim(token)}
+                disabled={tx.busy || secondsLeft > 0}
+                className="rounded-2xl bg-white/10 px-3 py-3 text-sm font-semibold hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {secondsLeft > 0 ? `${token.symbol} in ${Math.ceil(secondsLeft / 60)} min` : `Get 1,000 ${token.symbol}`}
+              </button>
+              {/* Wallets only list tokens they know about; this asks the wallet to track this one. */}
+              <button
+                onClick={() =>
+                  watchAsset.mutate({
+                    type: "ERC20",
+                    options: { address: token.address, symbol: token.symbol, decimals: 18 },
+                  })
+                }
+                className="text-xs text-zinc-400 hover:text-white"
+              >
+                Add {token.symbol} to wallet
+              </button>
+            </div>
           );
         })}
       </div>
