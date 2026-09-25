@@ -7,9 +7,12 @@
     "test": "hardhat test",
     "typecheck": "tsc -p .",
     "node": "hardhat node",
-    "deploy:local": "hardhat ignition deploy ignition/modules/BlitzSwap.ts --network localhost --reset",
-    "deploy:monad": "hardhat ignition deploy ignition/modules/BlitzSwap.ts --network monadTestnet --build-profile production",
-    "check:monad": "hardhat run scripts/check-deployer.ts --network monadTestnet"
+    "deploy:local": "hardhat ignition deploy ignition/modules/BlitzSwap.ts --network localhost --reset && pnpm export:web",
+    "deploy:monad": "hardhat ignition deploy ignition/modules/BlitzSwap.ts --network monadTestnet --build-profile production && pnpm export:web",
+    "check:monad": "hardhat run scripts/check-deployer.ts --network monadTestnet",
+    "export:web": "node scripts/export-web.ts",
+    "fund:local": "node scripts/fund-local.ts",
+    "dev": "pnpm --filter web dev"
   },
   "repository": {
     "type": "git",

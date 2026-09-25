@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-monad: #836ef9;
+  --color-panel: #16131f;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background: #0b0a10;
+  color: #ededed;
+}
