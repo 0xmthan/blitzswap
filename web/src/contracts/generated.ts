@@ -1188,6 +1188,17 @@ export const blitzPairAbi = [
 ] as const;
 
 export const deployments = {
+  "10143": {
+    "pair": "0x9b64c539500B90b3D5FDFA1829D6E57F31f4CF6A",
+    "token0": {
+      "symbol": "BLTZ",
+      "address": "0x68Bc20eE39EDbB0520C95b2ce2DC71Ae3811c69A"
+    },
+    "token1": {
+      "symbol": "mUSD",
+      "address": "0xd3F98A211c992C141705d479B248E287b9ab3c60"
+    }
+  },
   "31337": {
     "pair": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
     "token0": {
