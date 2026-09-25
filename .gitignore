@@ -1,0 +1,14 @@
+node_modules/
+
+# Hardhat build output
+artifacts/
+cache/
+types/
+coverage/
+
+# Local deployment state for the in-process chain
+ignition/deployments/chain-31337/
+
+# Secrets
+.env
+.env.*
