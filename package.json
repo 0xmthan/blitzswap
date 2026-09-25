@@ -5,7 +5,11 @@
   "scripts": {
     "compile": "hardhat build",
     "test": "hardhat test",
-    "typecheck": "tsc -p ."
+    "typecheck": "tsc -p .",
+    "node": "hardhat node",
+    "deploy:local": "hardhat ignition deploy ignition/modules/BlitzSwap.ts --network localhost --reset",
+    "deploy:monad": "hardhat ignition deploy ignition/modules/BlitzSwap.ts --network monadTestnet --build-profile production",
+    "check:monad": "hardhat run scripts/check-deployer.ts --network monadTestnet"
   },
   "repository": {
     "type": "git",
